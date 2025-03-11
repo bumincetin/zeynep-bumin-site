@@ -5,6 +5,18 @@ import dynamic from 'next/dynamic';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 
+// Add custom styles for the pin
+const customStyles = `
+  .custom-pin div {
+    transition: all 0.3s ease;
+  }
+  .custom-pin div:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    background-color: #ff6666 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4) !important;
+  }
+`;
+
 const ExploreMap = dynamic(() => import('../../components/ExploreMap'), {
   ssr: false,
   loading: () => (
@@ -17,6 +29,7 @@ const ExploreMap = dynamic(() => import('../../components/ExploreMap'), {
 export default function ExplorePage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <style>{customStyles}</style>
       <Navigation />
       <main className="flex-grow">
         {/* Hero Section */}

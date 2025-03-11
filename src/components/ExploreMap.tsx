@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -14,9 +14,27 @@ const fixLeafletIcons = () => {
   });
 };
 
+// Create custom red pin icon
+const redPinIcon = L.divIcon({
+  className: 'custom-pin',
+  html: `<div style="
+    width: 24px;
+    height: 24px;
+    background-color: #ff4444;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transform: translate(-50%, -50%);
+  "></div>`,
+  iconSize: [24, 24],
+  iconAnchor: [12, 12]
+});
+
+type Feature = 'food' | 'drink' | 'music' | 'entertainment' | 'sightseeing' | 'culture';
+
 interface Location {
   name: string;
-  type: string;
+  features: Feature[];
   coordinates: [number, number];
   description: string;
 }
@@ -36,27 +54,33 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'Da Enzo al 29',
-        type: 'food',
+        features: ['food'],
         coordinates: [41.8879, 12.4773],
         description: 'Famous for traditional Roman pasta dishes'
       },
       {
         name: 'Roscioli',
-        type: 'food',
+        features: ['food', 'drink'],
         coordinates: [41.8939, 12.4756],
-        description: 'Best Cacio e Pepe in Rome'
+        description: 'Best Cacio e Pepe in Rome and excellent wine selection'
       },
       {
         name: 'Teatro dell\'Opera',
-        type: 'entertainment',
+        features: ['entertainment', 'culture', 'music'],
         coordinates: [41.8998, 12.4956],
         description: 'Classical music and opera performances'
       },
       {
         name: 'Big Mama',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'drink'],
         coordinates: [41.8891, 12.4707],
-        description: 'Popular jazz venue'
+        description: 'Popular jazz venue with great cocktails'
+      },
+      {
+        name: 'Pantheon',
+        features: ['sightseeing', 'culture'],
+        coordinates: [41.8986, 12.4769],
+        description: 'Ancient Roman temple, architectural marvel'
       }
     ]
   },
@@ -67,19 +91,19 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'Tsukiji Outer Market',
-        type: 'food',
+        features: ['food', 'culture'],
         coordinates: [35.6654, 139.7707],
         description: 'Famous fish market and street food'
       },
       {
         name: 'Blue Note Tokyo',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'drink'],
         coordinates: [35.6897, 139.7129],
         description: 'World-class jazz venue'
       },
       {
         name: 'Kabukiza Theatre',
-        type: 'entertainment',
+        features: ['entertainment', 'culture'],
         coordinates: [35.6690, 139.7649],
         description: 'Traditional Kabuki performances'
       }
@@ -92,19 +116,19 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'La Boqueria',
-        type: 'food',
+        features: ['food', 'culture', 'sightseeing'],
         coordinates: [41.3816, 2.1715],
         description: 'Historic market with fresh produce'
       },
       {
         name: 'Quimet & Quimet',
-        type: 'food',
+        features: ['food', 'drink'],
         coordinates: [41.3738, 2.1685],
         description: 'Famous for montaditos'
       },
       {
         name: 'Palau de la Música',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'culture', 'sightseeing'],
         coordinates: [41.3875, 2.1752],
         description: 'Modernist concert hall'
       }
@@ -117,31 +141,31 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'Le Baratin',
-        type: 'food',
+        features: ['food', 'drink'],
         coordinates: [48.8721, 2.3874],
         description: 'Authentic bistro with creative French cuisine'
       },
       {
         name: 'Pierre Hermé',
-        type: 'food',
+        features: ['food'],
         coordinates: [48.8513, 2.3287],
         description: 'World-renowned patisserie famous for macarons'
       },
       {
         name: 'Fromagerie Barthélémy',
-        type: 'food',
+        features: ['food', 'culture'],
         coordinates: [48.8547, 2.3264],
         description: 'Exceptional cheese shop in the 7th arrondissement'
       },
       {
         name: 'Le Petit Journal',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'drink'],
         coordinates: [48.8539, 2.3345],
         description: 'Historic jazz club in Saint-Germain'
       },
       {
         name: 'Little Red Door',
-        type: 'entertainment',
+        features: ['drink', 'entertainment'],
         coordinates: [48.8632, 2.3624],
         description: 'Award-winning speakeasy cocktail bar'
       }
@@ -154,31 +178,31 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'Asmalı Cavit',
-        type: 'food',
+        features: ['food', 'drink', 'culture'],
         coordinates: [41.0316, 28.9773],
         description: 'Traditional meyhane in Beyoğlu'
       },
       {
         name: 'Kadıköy Market',
-        type: 'food',
+        features: ['food', 'culture', 'sightseeing'],
         coordinates: [40.9892, 29.0282],
         description: 'Vibrant market with street food and spices'
       },
       {
         name: 'Kurukahveci Mehmet Efendi',
-        type: 'food',
+        features: ['drink', 'culture'],
         coordinates: [41.0165, 28.9719],
         description: 'Historic Turkish coffee shop since 1871'
       },
       {
         name: 'Babylon',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'drink'],
         coordinates: [41.0335, 28.9757],
         description: 'Live music venue featuring local and international artists'
       },
       {
         name: 'Galata Tower',
-        type: 'entertainment',
+        features: ['sightseeing', 'culture', 'entertainment'],
         coordinates: [41.0258, 28.9744],
         description: 'Historic tower with panoramic views and evening entertainment'
       }
@@ -191,31 +215,31 @@ const cityLocations: { [key: string]: CityLocations } = {
     locations: [
       {
         name: 'Smorgasburg',
-        type: 'food',
+        features: ['food', 'culture'],
         coordinates: [40.7216, -73.9873],
         description: 'Open-air food market with diverse vendors'
       },
       {
         name: 'Russ & Daughters',
-        type: 'food',
+        features: ['food', 'culture'],
         coordinates: [40.7222, -73.9875],
         description: 'Iconic Jewish appetizing store since 1914'
       },
       {
         name: 'Other Half Brewing',
-        type: 'food',
+        features: ['drink'],
         coordinates: [40.6738, -73.9958],
         description: 'Popular craft brewery in Brooklyn'
       },
       {
         name: 'Blue Note Jazz Club',
-        type: 'entertainment',
+        features: ['entertainment', 'music', 'drink'],
         coordinates: [40.7308, -74.0027],
         description: 'World-famous jazz venue in Greenwich Village'
       },
       {
         name: 'The Public Theater',
-        type: 'entertainment',
+        features: ['entertainment', 'culture'],
         coordinates: [40.7287, -73.9914],
         description: 'Historic theater known for innovative productions'
       }
@@ -227,60 +251,122 @@ interface ExploreMapProps {
   selectedCity?: string;
 }
 
+const featureLabels: Record<Feature, string> = {
+  food: 'Food',
+  drink: 'Drinks',
+  music: 'Music',
+  entertainment: 'Entertainment',
+  sightseeing: 'Sightseeing',
+  culture: 'Culture'
+};
+
 export default function ExploreMap({ selectedCity }: ExploreMapProps) {
+  const [activeFeatures, setActiveFeatures] = useState<Set<Feature>>(
+    new Set(['food', 'drink', 'music', 'entertainment', 'sightseeing', 'culture'] as Feature[])
+  );
+  const [map, setMap] = useState<L.Map | null>(null);
+  const [markers, setMarkers] = useState<L.Marker[]>([]);
+
+  const toggleFeature = (feature: Feature) => {
+    const newFeatures = new Set(activeFeatures);
+    if (newFeatures.has(feature)) {
+      newFeatures.delete(feature);
+    } else {
+      newFeatures.add(feature);
+    }
+    setActiveFeatures(newFeatures);
+  };
+
   useEffect(() => {
     // Fix Leaflet icons
     fixLeafletIcons();
 
-    // Initialize map
-    const map = L.map('map');
+    // Initialize map if not already initialized
+    if (!map) {
+      const newMap = L.map('map');
+      setMap(newMap);
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(newMap);
+    }
+
+    // Clear existing markers
+    markers.forEach(marker => marker.remove());
+    const newMarkers: L.Marker[] = [];
 
     // Create markers for selected city or all cities
     if (selectedCity && cityLocations[selectedCity]) {
       const cityData = cityLocations[selectedCity];
-      map.setView(cityData.center, cityData.zoom);
+      map?.setView(cityData.center, cityData.zoom);
 
       // Add markers for the selected city
       cityData.locations.forEach(location => {
-        const marker = L.marker(location.coordinates)
-          .addTo(map)
-          .bindPopup(`
-            <strong>${location.name}</strong><br>
-            ${location.description}
-          `);
+        if (location.features.some(feature => activeFeatures.has(feature))) {
+          const marker = L.marker(location.coordinates, { icon: redPinIcon })
+            .addTo(map!)
+            .bindPopup(`
+              <strong>${location.name}</strong><br>
+              <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
+              ${location.description}
+            `);
+          newMarkers.push(marker);
+        }
       });
     } else {
       // Show all cities if no specific city is selected
       const bounds = new L.LatLngBounds([]);
       Object.values(cityLocations).forEach(cityData => {
         cityData.locations.forEach(location => {
-          const marker = L.marker(location.coordinates)
-            .addTo(map)
-            .bindPopup(`
-              <strong>${location.name}</strong><br>
-              <em>${cityData.city}</em><br>
-              ${location.description}
-            `);
-          bounds.extend(location.coordinates);
+          if (location.features.some(feature => activeFeatures.has(feature))) {
+            const marker = L.marker(location.coordinates, { icon: redPinIcon })
+              .addTo(map!)
+              .bindPopup(`
+                <strong>${location.name}</strong><br>
+                <em>${cityData.city}</em><br>
+                <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
+                ${location.description}
+              `);
+            bounds.extend(location.coordinates);
+            newMarkers.push(marker);
+          }
         });
       });
-      map.fitBounds(bounds, { padding: [50, 50] });
+      map?.fitBounds(bounds, { padding: [50, 50] });
     }
 
+    setMarkers(newMarkers);
+
     return () => {
-      map.remove();
+      markers.forEach(marker => marker.remove());
     };
-  }, [selectedCity]);
+  }, [selectedCity, activeFeatures, map]);
 
   return (
-    <div className="w-full h-[600px] relative">
-      <div id="map" className="w-full h-full"></div>
+    <div className="space-y-4">
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-lg font-semibold mb-3">Filter by Features</h3>
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(featureLabels).map(([feature, label]) => (
+            <button
+              key={feature}
+              onClick={() => toggleFeature(feature as Feature)}
+              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                activeFeatures.has(feature as Feature)
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="w-full h-[600px] relative rounded-lg overflow-hidden">
+        <div id="map" className="w-full h-full"></div>
+      </div>
     </div>
   );
 } 
