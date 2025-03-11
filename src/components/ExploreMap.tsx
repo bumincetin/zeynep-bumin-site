@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Create custom red pin icon
-const createRedPinIcon = () => L.divIcon({
+// Create custom pin icons for different categories
+const createPinIcon = (color: string) => L.divIcon({
   className: 'custom-pin',
   html: `<div style="
     width: 24px;
     height: 24px;
-    background-color: #ff4444;
+    background-color: ${color};
     border: 2px solid white;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -19,6 +19,16 @@ const createRedPinIcon = () => L.divIcon({
   iconSize: [24, 24],
   iconAnchor: [12, 12]
 });
+
+const getPinColor = (features: Feature[]): string => {
+  if (features.some(f => ['music', 'entertainment'].includes(f))) {
+    return 'var(--color-lavender)'; // Lavender for entertainment/music
+  } else if (features.some(f => ['food', 'drink'].includes(f))) {
+    return 'var(--color-terra)'; // Terra cotta for food/drink
+  } else {
+    return 'var(--color-sage)'; // Sage for culture/sightseeing
+  }
+};
 
 type Feature = 'food' | 'drink' | 'music' | 'entertainment' | 'sightseeing' | 'culture';
 
@@ -250,12 +260,13 @@ const featureLabels: Record<Feature, string> = {
   culture: 'Culture'
 };
 
-export default function ExploreMap({ selectedCity }: ExploreMapProps) {
+export default function ExploreMap({ selectedCity: initialSelectedCity }: ExploreMapProps) {
   const [activeFeatures, setActiveFeatures] = useState<Set<Feature>>(
     new Set(['food', 'drink', 'music', 'entertainment', 'sightseeing', 'culture'] as Feature[])
   );
   const [map, setMap] = useState<L.Map | null>(null);
   const [markers, setMarkers] = useState<L.Marker[]>([]);
+  const [selectedCity, setSelectedCity] = useState<string | undefined>(initialSelectedCity);
 
   const toggleFeature = (feature: Feature) => {
     const newFeatures = new Set(activeFeatures);
@@ -265,6 +276,25 @@ export default function ExploreMap({ selectedCity }: ExploreMapProps) {
       newFeatures.add(feature);
     }
     setActiveFeatures(newFeatures);
+  };
+
+  const handleCitySelect = (city: string | undefined) => {
+    setSelectedCity(city);
+    if (map && city && cityLocations[city]) {
+      const { center, zoom } = cityLocations[city];
+      map.setView(center, zoom);
+    } else if (map && !city) {
+      // Show all cities if no city is selected
+      const bounds = new L.LatLngBounds([]);
+      Object.values(cityLocations).forEach(cityData => {
+        cityData.locations.forEach(location => {
+          bounds.extend(location.coordinates);
+        });
+      });
+      if (bounds.getNorthEast() && bounds.getSouthWest()) {
+        map.fitBounds(bounds, { padding: [50, 50] });
+      }
+    }
   };
 
   // Initialize map
@@ -312,13 +342,23 @@ export default function ExploreMap({ selectedCity }: ExploreMapProps) {
         // Add markers for the selected city
         cityData.locations.forEach(location => {
           if (location.features.some(feature => activeFeatures.has(feature))) {
-            const marker = L.marker(location.coordinates, { icon: createRedPinIcon() })
+            const pinColor = getPinColor(location.features);
+            const marker = L.marker(location.coordinates, { icon: createPinIcon(pinColor) })
               .addTo(map)
               .bindPopup(`
-                <strong>${location.name}</strong><br>
-                <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
-                ${location.description}
-              `);
+                <div class="custom-popup handwritten">
+                  <div class="text-xl font-bold mb-2" style="color: var(--color-earth);">✧ ${location.name} ✧</div>
+                  <div class="mb-2" style="color: var(--color-clay);">
+                    ${location.features.map(f => `${getFeatureIcon(f)} ${featureLabels[f]}`).join(' • ')}
+                  </div>
+                  <div style="color: var(--color-terra); font-family: 'Quicksand', sans-serif;">
+                    ${location.description}
+                  </div>
+                </div>
+              `, {
+                className: 'bohemian-popup',
+                maxWidth: 300
+              });
             newMarkers.push(marker);
           }
         });
@@ -328,14 +368,26 @@ export default function ExploreMap({ selectedCity }: ExploreMapProps) {
         Object.values(cityLocations).forEach(cityData => {
           cityData.locations.forEach(location => {
             if (location.features.some(feature => activeFeatures.has(feature))) {
-              const marker = L.marker(location.coordinates, { icon: createRedPinIcon() })
+              const pinColor = getPinColor(location.features);
+              const marker = L.marker(location.coordinates, { icon: createPinIcon(pinColor) })
                 .addTo(map)
                 .bindPopup(`
-                  <strong>${location.name}</strong><br>
-                  <em>${cityData.city}</em><br>
-                  <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
-                  ${location.description}
-                `);
+                  <div class="custom-popup handwritten">
+                    <div class="text-xl font-bold mb-2" style="color: var(--color-earth);">✧ ${location.name} ✧</div>
+                    <div class="mb-1" style="color: var(--color-clay); font-family: 'Quicksand', sans-serif;">
+                      ${cityData.city}
+                    </div>
+                    <div class="mb-2" style="color: var(--color-clay);">
+                      ${location.features.map(f => `${getFeatureIcon(f)} ${featureLabels[f]}`).join(' • ')}
+                    </div>
+                    <div style="color: var(--color-terra); font-family: 'Quicksand', sans-serif;">
+                      ${location.description}
+                    </div>
+                  </div>
+                `, {
+                  className: 'bohemian-popup',
+                  maxWidth: 300
+                });
               bounds.extend(location.coordinates);
               newMarkers.push(marker);
             }
@@ -356,29 +408,127 @@ export default function ExploreMap({ selectedCity }: ExploreMapProps) {
     };
   }, [selectedCity, activeFeatures, map]);
 
+  // Add legend to explain marker colors
+  useEffect(() => {
+    if (!map) return;
+
+    class LegendControl extends L.Control {
+      onAdd(map: L.Map) {
+        const div = L.DomUtil.create('div', 'info legend bohemian-card');
+        div.style.backgroundColor = 'var(--color-cream)';
+        div.style.padding = '15px';
+        div.style.borderRadius = '12px';
+        div.style.border = '2px solid var(--color-sand)';
+        div.style.fontFamily = "'Quicksand', sans-serif";
+        div.style.fontSize = '14px';
+        div.style.maxWidth = '200px';
+
+        div.innerHTML = `
+          <div style="margin-bottom: 10px;" class="handwritten text-xl">✧ Local Treasures ✧</div>
+          <div style="display: flex; align-items: center; margin-bottom: 8px;">
+            <div style="width: 16px; height: 16px; background: var(--color-lavender); border-radius: 50%; margin-right: 8px; border: 2px solid white;"></div>
+            <span>🎵 Arts & Entertainment</span>
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 8px;">
+            <div style="width: 16px; height: 16px; background: var(--color-terra); border-radius: 50%; margin-right: 8px; border: 2px solid white;"></div>
+            <span>🍴 Food & Drinks</span>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <div style="width: 16px; height: 16px; background: var(--color-sage); border-radius: 50%; margin-right: 8px; border: 2px solid white;"></div>
+            <span>🏛️ Culture & Sights</span>
+          </div>
+        `;
+
+        return div;
+      }
+    }
+
+    const legend = new LegendControl({ position: 'bottomright' });
+    legend.addTo(map);
+
+    return () => {
+      legend.remove();
+    };
+  }, [map]);
+
   return (
-    <div className="space-y-4">
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-3">Filter by Features</h3>
-        <div className="flex flex-wrap gap-2">
-          {Object.entries(featureLabels).map(([feature, label]) => (
+    <div className="space-y-6 relative">
+      {/* Decorative elements */}
+      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 handwritten text-2xl text-terra opacity-80">
+        ✧ Discover Hidden Gems ✧
+      </div>
+      
+      <div className="bohemian-card space-y-6 relative overflow-hidden">
+        {/* Decorative corner elements */}
+        <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-sand opacity-50 rounded-tl-lg"></div>
+        <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-sand opacity-50 rounded-tr-lg"></div>
+        <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-sand opacity-50 rounded-bl-lg"></div>
+        <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-sand opacity-50 rounded-br-lg"></div>
+
+        <div>
+          <h3 className="text-2xl mb-4 text-center">Choose Your Journey</h3>
+          <div className="flex flex-wrap gap-3 justify-center">
             <button
-              key={feature}
-              onClick={() => toggleFeature(feature as Feature)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                activeFeatures.has(feature as Feature)
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              onClick={() => handleCitySelect(undefined)}
+              className={`btn-bohemian ${
+                !selectedCity ? 'scale-105' : 'opacity-90 hover:opacity-100'
               }`}
             >
-              {label}
+              ⋆ All Cities ⋆
             </button>
-          ))}
+            {Object.entries(cityLocations).map(([cityKey, cityData]) => (
+              <button
+                key={cityKey}
+                onClick={() => handleCitySelect(cityKey)}
+                className={`btn-bohemian ${
+                  selectedCity === cityKey ? 'scale-105' : 'opacity-90 hover:opacity-100'
+                }`}
+              >
+                ⋆ {cityData.city} ⋆
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-2xl mb-4 text-center">Explore Experiences</h3>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {Object.entries(featureLabels).map(([feature, label]) => (
+              <button
+                key={feature}
+                onClick={() => toggleFeature(feature as Feature)}
+                className={`feature-btn ${
+                  activeFeatures.has(feature as Feature) ? 'active' : ''
+                }`}
+              >
+                {getFeatureIcon(feature as Feature)} {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="w-full h-[600px] relative rounded-lg overflow-hidden">
-        <div id="map" className="w-full h-full"></div>
+
+      <div className="bohemian-card h-[600px] relative overflow-hidden">
+        <div id="map" className="w-full h-full rounded-lg"></div>
+      </div>
+
+      {/* Decorative bottom element */}
+      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 handwritten text-xl text-terra opacity-80">
+        ❀ Local Secrets Await ❀
       </div>
     </div>
   );
+}
+
+// Helper function to get feature icons
+function getFeatureIcon(feature: Feature): string {
+  const icons: Record<Feature, string> = {
+    food: '🍴',
+    drink: '🍷',
+    music: '🎵',
+    entertainment: '🎭',
+    sightseeing: '🏛️',
+    culture: '🎨'
+  };
+  return icons[feature];
 } 

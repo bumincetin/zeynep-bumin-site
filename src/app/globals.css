@@ -2,6 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400;600&family=Quicksand:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Bohemian Color Palette */
+  --color-earth: #8B4513;
+  --color-terra: #D2691E;
+  --color-sage: #9CAF88;
+  --color-moss: #606C38;
+  --color-clay: #BC6C25;
+  --color-sand: #DDA15E;
+  --color-cream: #FEFAE0;
+  --color-sunset: #FF6B6B;
+  --color-ocean: #219EBC;
+  --color-lavender: #9B7EDE;
+}
+
+body {
+  background-color: var(--color-cream);
+  font-family: 'Quicksand', sans-serif;
+  color: var(--color-earth);
+}
+
+h1, h2, h3 {
+  font-family: 'Amatic SC', cursive;
+  letter-spacing: 0.05em;
+}
+
+.handwritten {
+  font-family: 'Caveat', cursive;
+}
+
+/* Bohemian Button Styles */
+.btn-bohemian {
+  @apply px-6 py-2 rounded-full transition-all duration-300;
+  background: linear-gradient(45deg, var(--color-terra), var(--color-clay));
+  border: 2px solid var(--color-sand);
+  color: var(--color-cream);
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-bohemian:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(45deg, var(--color-clay), var(--color-terra));
+}
+
+/* Feature Filter Buttons */
+.feature-btn {
+  @apply px-4 py-2 rounded-full transition-all duration-300;
+  background: var(--color-cream);
+  border: 2px solid var(--color-sage);
+  color: var(--color-moss);
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+}
+
+.feature-btn.active {
+  background: var(--color-sage);
+  color: var(--color-cream);
+  border-color: var(--color-moss);
+}
+
+/* Card Styles */
+.bohemian-card {
+  @apply rounded-lg p-6;
+  background: var(--color-cream);
+  border: 2px solid var(--color-sand);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Map Customization */
+.custom-popup {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: var(--color-cream);
+  border: 2px solid var(--color-sand);
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: var(--color-sand);
+}
+
+/* Decorative Elements */
+.bohemian-border {
+  border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 C50,40 50,60 100,100 M100,0 C50,40 50,60 0,100' stroke='%23DDA15E' fill='none' stroke-width='2'/%3E%3C/svg%3E") 1;
+  border-width: 4px;
+  border-style: solid;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand);
+  border-radius: 6px;
+  border: 3px solid var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-clay);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
