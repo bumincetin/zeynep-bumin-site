@@ -6,6 +6,7 @@ const nextConfig = {
   },
   basePath: '/zeynep-bumin-site', // Replace with your repository name
   assetPrefix: '/zeynep-bumin-site/', // Replace with your repository name
+  trailingSlash: true,
 }
 
 module.exports = nextConfig 
