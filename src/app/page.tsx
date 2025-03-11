@@ -4,6 +4,8 @@ import React from 'react';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
+import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FiMapPin, FiCompass, FiCoffee, FiUsers } from 'react-icons/fi';
 
@@ -37,19 +39,25 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { city: 'Rome', image: '/images/roma.jpg', delay: 0 },
-                { city: 'Tokyo', image: '/images/tokyo.jpg', delay: 0.2 },
-                { city: 'Barcelona', image: '/images/barcelona.jpg', delay: 0.4 }
+                { city: 'Rome', image: '/zeynep-bumin-site/images/roma.jpg', delay: 0 },
+                { city: 'Tokyo', image: '/zeynep-bumin-site/images/tokyo.jpg', delay: 0.2 },
+                { city: 'Barcelona', image: '/zeynep-bumin-site/images/barcelona.jpg', delay: 0.4 }
               ].map((item, index) => (
-                <div
+                <Link
                   key={item.city}
+                  href={`/guides/${item.city.toLowerCase()}`}
                   className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                 >
-                  <img 
-                    src={item.image}
-                    alt={`${item.city} city guide`}
-                    className="w-full h-48 object-cover"
-                  />
+                  <div className="relative h-48">
+                    <Image 
+                      src={item.image}
+                      alt={`${item.city} city guide`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index === 0}
+                    />
+                  </div>
                   <div className="p-6">
                     <h3 className="text-xl text-gray-900 font-bold mb-2">
                       Hidden Gems of {item.city}
@@ -57,11 +65,11 @@ export default function Home() {
                     <p className="text-gray-600 mb-4">
                       Explore the secret spots and local favorites that make this city unique.
                     </p>
-                    <button className="text-gray-900 hover:text-gray-600 font-semibold">
+                    <span className="text-gray-900 hover:text-gray-600 font-semibold">
                       Read More →
-                    </button>
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

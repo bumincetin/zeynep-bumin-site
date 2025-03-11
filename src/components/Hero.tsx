@@ -2,20 +2,22 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-gray-900 flex items-center">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/images/hero.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: '0.4'
-        }}
-      />
+      <div className="absolute inset-0">
+        <Image
+          src="/zeynep-bumin-site/images/hero.jpg"
+          alt="Hero background"
+          fill
+          className="object-cover opacity-40"
+          priority
+          quality={85}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative container mx-auto px-4 text-center">
@@ -35,10 +37,10 @@ const Hero = () => {
             Explore Local Guides
           </Link>
           <Link
-            href="/community"
+            href="/explore"
             className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10"
           >
-            Join Community
+            View Map
           </Link>
         </div>
       </div>
