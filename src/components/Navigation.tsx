@@ -13,7 +13,7 @@ const Navigation = () => {
     { label: 'Local Guides', href: '/guides' },
     { label: 'Food & Drink', href: '#' },
     { label: 'Cultural Insights', href: '#' },
-    { label: 'Explore Map', href: '#' },
+    { label: 'Explore Map', href: '/explore' },
     { label: 'Community', href: '#' }
   ]
 
