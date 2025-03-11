@@ -5,12 +5,36 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const cities = [
-  { name: 'Rome', image: '/images/roma.jpg', guides: ['Hidden Cafes', 'Ancient Secrets', 'Local Markets'] },
-  { name: 'Tokyo', image: '/images/tokyo.jpg', guides: ['Street Food Tour', 'Temple Walk', 'Night Life'] },
-  { name: 'Barcelona', image: '/images/barcelona.jpg', guides: ['Tapas Trail', 'Gothic Quarter', 'Beach Life'] },
-  { name: 'Paris', image: '/images/paris.jpg', guides: ['Hidden Bistros', 'Art Walk', 'Local Life'] },
-  { name: 'Istanbul', image: '/images/istanbul.jpg', guides: ['Spice Markets', 'Bosphorus Tour', 'Tea Gardens'] },
-  { name: 'New York', image: '/images/newyork.jpg', guides: ['Hidden Delis', 'Local Parks', 'Food Scene'] }
+  { 
+    name: 'Rome', 
+    image: '/images/roma.jpg', 
+    guides: ['Hidden Cafes', 'Food & Wine Experience', 'Music & Nightlife'] 
+  },
+  { 
+    name: 'Tokyo', 
+    image: '/images/tokyo.jpg', 
+    guides: ['Izakaya & Sake Tour', 'Ramen & Street Food', 'Live Music & Entertainment'] 
+  },
+  { 
+    name: 'Barcelona', 
+    image: '/images/barcelona.jpg', 
+    guides: ['Tapas & Wine Journey', 'Market & Food Workshop', 'Flamenco & Live Music'] 
+  },
+  { 
+    name: 'Paris', 
+    image: '/images/paris.jpg', 
+    guides: ['Bistro & Wine Tour', 'Patisserie Trail', 'Jazz & Cabaret'] 
+  },
+  { 
+    name: 'Istanbul', 
+    image: '/images/istanbul.jpg', 
+    guides: ['Meyhane & Raki Night', 'Street Food & Spices', 'Turkish Music & Dance'] 
+  },
+  { 
+    name: 'New York', 
+    image: '/images/newyork.jpg', 
+    guides: ['Food Truck Safari', 'Craft Beer Tour', 'Live Music Venues'] 
+  }
 ] as const;
 
 const genericGuides = [

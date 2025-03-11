@@ -17,18 +17,18 @@ const cityGuides = {
         tips: ['Avoid tourist-heavy hours (11am-2pm)', 'Many cafes are cash-only', 'Learn basic Italian greetings']
       },
       {
-        title: 'Ancient Secrets Walking Tour',
-        content: 'Beyond the Colosseum lies a network of lesser-known ancient sites. Start at the Crypta Balbi, continue to the hidden Domus Aurea, and discover the underground layers of San Clemente Basilica. End at the overlooked but fascinating Baths of Caracalla.',
-        duration: '5-6 hours',
-        bestTime: 'Early morning to avoid crowds',
-        tips: ['Book Domus Aurea visits in advance', 'Wear comfortable walking shoes', 'Bring water and snacks']
+        title: 'Food & Wine Experience',
+        content: 'Savor authentic Roman cuisine at its finest. Start with traditional pasta dishes like Carbonara at Da Enzo al 29, try the famous Roman-style pizza at Antico Forno Roscioli, and indulge in gelato at Fatamorgana. Pair your meals with local wines from the Frascati region.',
+        duration: '4-5 hours',
+        bestTime: 'Dinner time (7:30pm-10:30pm)',
+        tips: ['Make reservations for popular restaurants', 'Try the house wine (vino della casa)', 'Ask for local specialties not on the menu']
       },
       {
-        title: 'Local Markets Guide',
-        content: 'Experience Rome\'s vibrant market culture. Begin at Campo de\' Fiori for fresh produce, then explore the gourmet stands at Mercato Trionfale. Don\'t miss the authentic Roman lunch spots at Testaccio Market, and finish at the vintage Borghetto Flaminio market.',
-        duration: '4-5 hours',
-        bestTime: 'Morning (markets close early)',
-        tips: ['Bring cash and reusable bags', 'Try samples offered by vendors', 'Learn basic food-related Italian words']
+        title: 'Music & Nightlife',
+        content: 'Experience Rome\'s vibrant nightlife scene. Begin at Big Mama for live blues and jazz, then head to Alexanderplatz Jazz Club for world-class performances. End the night at Club Circolo degli Artisti for contemporary music and dancing.',
+        duration: '5-6 hours',
+        bestTime: 'Late evening until early morning',
+        tips: ['Check event schedules in advance', 'Book tickets online for popular venues', 'Take a taxi for late-night returns']
       }
     ]
   },
@@ -38,25 +38,25 @@ const cityGuides = {
     intro: 'Navigate Tokyo\'s dynamic culture through local perspectives, from street food adventures to peaceful temple walks.',
     guides: [
       {
-        title: 'Street Food Tour of Shinjuku',
-        content: 'Dive into Tokyo\'s street food scene in Shinjuku\'s Memory Lane (Omoide Yokocho). Start with yakitori at Tsunahachi, try monjayaki at Tsurukame, and explore the standing sushi bars. Don\'t miss the late-night ramen at Fuunji.',
-        duration: '3-4 hours',
-        bestTime: 'Evening (6pm onwards)',
-        tips: ['Most places are cash-only', 'Learn basic Japanese food terms', 'Some places don\'t allow photos']
-      },
-      {
-        title: 'Temple Walk Through History',
-        content: 'Experience Tokyo\'s spiritual side. Begin at Sensō-ji in Asakusa, then visit the peaceful Gotoku-ji (Lucky Cat Temple). Continue to Tennō-ji for its stunning garden, and end at Zōjō-ji with views of Tokyo Tower.',
-        duration: '6-7 hours',
-        bestTime: 'Early morning for fewer crowds',
-        tips: ['Remove shoes when required', 'Observe quiet zones', 'Bring coins for offerings']
-      },
-      {
-        title: 'Night Life in Shimokitazawa',
-        content: 'Experience Tokyo\'s alternative nightlife in Shimokitazawa. Start at Shimokita Garage for live music, explore vintage vinyl at Flash Disc Ranch, enjoy craft beer at Bear Pawz, and end the night at a karaoke box.',
+        title: 'Izakaya & Sake Tour',
+        content: 'Dive into Tokyo\'s izakaya culture in Shinjuku\'s Golden Gai. Sample different types of sake while enjoying traditional bar snacks. Visit Albatross for its unique atmosphere, then try Deathmatch in Paradise for their legendary chicken wings. End at Bar Plastic Model for creative cocktails.',
         duration: '4-5 hours',
+        bestTime: 'Evening (6pm onwards)',
+        tips: ['Make reservations for small izakayas', 'Try different grades of sake', 'Learn basic drinking etiquette']
+      },
+      {
+        title: 'Ramen & Street Food Safari',
+        content: 'Explore Tokyo\'s diverse ramen scene. Start at Fuunji for their famous tsukemen, try Nakiryu\'s tantanmen, and experience Ramen Street in Tokyo Station. Don\'t miss the street food in Ameya-Yokocho market, including takoyaki and yakitori.',
+        duration: '3-4 hours',
+        bestTime: 'Lunch or late dinner',
+        tips: ['Be prepared to wait at popular spots', 'Look for shops with ticket machines', 'Try different ramen styles']
+      },
+      {
+        title: 'Live Music & Entertainment',
+        content: 'Experience Tokyo\'s eclectic music scene. Start at Blue Note Tokyo for world-class jazz, visit O-NEST in Shibuya for indie bands, and end at Contact for electronic music. Don\'t miss the unique experience of a karaoke room at Big Echo.',
+        duration: '6-7 hours',
         bestTime: 'Evening until last train',
-        tips: ['Check last train times', 'Most venues are cash-only', 'Book karaoke in advance on weekends']
+        tips: ['Book tickets in advance', 'Check last train times', 'Join the local music meetups']
       }
     ]
   },
@@ -66,25 +66,25 @@ const cityGuides = {
     intro: 'Experience Barcelona\'s vibrant culture through local traditions, from tapas trails to hidden beaches.',
     guides: [
       {
-        title: 'Tapas Trail in Gràcia',
-        content: 'Follow the locals through Gràcia\'s best tapas spots. Begin at La Pepita for modern tapas, continue to Cal Pep for seafood specialties, visit Bodega Lo Pinyol for traditional bites, and end at La Vermu for vermut and classic tapas.',
+        title: 'Tapas & Wine Journey',
+        content: 'Discover Barcelona\'s best tapas bars. Start at El Xampanyet for their house-made vermouth and anchovies, continue to Cal Pep for seafood specialties, and end at Quimet & Quimet for their montaditos. Pair everything with local Catalan wines.',
         duration: '4-5 hours',
         bestTime: 'Evening (8pm onwards)',
-        tips: ['Reservations recommended', 'Learn basic Catalan phrases', 'Pace yourself']
+        tips: ['Order vermut to start', 'Try local Priorat wines', 'Share plates for more variety']
       },
       {
-        title: 'Gothic Quarter Hidden Gems',
-        content: 'Explore the secrets of the Gothic Quarter. Start at the hidden Roman ruins under Plaça del Rei, discover the medieval Jewish quarter, visit the artisan workshops around Carrer Petritxol, and end at the rooftop of Santa Maria del Mar.',
+        title: 'Market & Food Workshop',
+        content: 'Immerse yourself in Catalan cuisine. Visit La Boqueria market to source ingredients, learn to make paella at a local cooking school, and discover traditional desserts like crema catalana. End with a visit to a xocolateria for churros.',
         duration: '5-6 hours',
-        bestTime: 'Morning or late afternoon',
-        tips: ['Wear comfortable shoes', 'Bring a camera', 'Book rooftop access in advance']
+        bestTime: 'Morning market visits',
+        tips: ['Arrive early at markets', 'Book cooking classes ahead', 'Try seasonal specialties']
       },
       {
-        title: 'Local Beach Life',
-        content: 'Escape the tourist crowds at Barcelona\'s hidden beaches. Start at Nova Icària for water sports, continue to Mar Bella for a local vibe, and end at Ocata Beach for pristine sand and authentic chiringuitos.',
-        duration: 'Full day',
-        bestTime: 'Early morning or late afternoon',
-        tips: ['Bring sunscreen and water', 'Try local beach snacks', 'Use public transport']
+        title: 'Flamenco & Live Music',
+        content: 'Experience Barcelona\'s rich music scene. Watch authentic flamenco at Tablao Cordobes, enjoy jazz at Jamboree, and end the night at Razzmatazz for diverse music across five rooms. Don\'t miss the street performers on Las Ramblas.',
+        duration: 'Full evening',
+        bestTime: 'Late evening until early morning',
+        tips: ['Book flamenco shows in advance', 'Check club schedules online', 'Try different music venues']
       }
     ]
   }
