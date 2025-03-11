@@ -8,32 +8,56 @@ const cities = [
   { 
     name: 'Rome', 
     image: '/images/roma.jpg', 
-    guides: ['Hidden Cafes', 'Food & Wine Experience', 'Music & Nightlife'] 
+    sections: [
+      'Traditional Pasta & Pizza',
+      'Wine & Aperitivo',
+      'Live Music & Shows'
+    ]
   },
   { 
     name: 'Tokyo', 
     image: '/images/tokyo.jpg', 
-    guides: ['Izakaya & Sake Tour', 'Ramen & Street Food', 'Live Music & Entertainment'] 
+    sections: [
+      'Ramen & Street Food',
+      'Izakaya & Sake',
+      'Traditional & Modern Entertainment'
+    ]
   },
   { 
     name: 'Barcelona', 
     image: '/images/barcelona.jpg', 
-    guides: ['Tapas & Wine Journey', 'Market & Food Workshop', 'Flamenco & Live Music'] 
+    sections: [
+      'Tapas & Catalan Wine',
+      'Market & Local Cuisine',
+      'Flamenco & Nightlife'
+    ]
   },
   { 
     name: 'Paris', 
     image: '/images/paris.jpg', 
-    guides: ['Bistro & Wine Tour', 'Patisserie Trail', 'Jazz & Cabaret'] 
+    sections: [
+      'Bistros & Fine Dining',
+      'Wine & Cheese',
+      'Jazz & Cabaret'
+    ]
   },
   { 
     name: 'Istanbul', 
     image: '/images/istanbul.jpg', 
-    guides: ['Meyhane & Raki Night', 'Street Food & Spices', 'Turkish Music & Dance'] 
+    sections: [
+      'Meyhane & Raki',
+      'Street Food & Spices',
+      'Traditional Music & Dance'
+    ]
   },
   { 
     name: 'New York', 
     image: '/images/newyork.jpg', 
-    guides: ['Food Truck Safari', 'Craft Beer Tour', 'Live Music Venues'] 
+    sections: [
+      'Food Trucks & Delis',
+      'Craft Beer & Cocktails',
+      'Live Music & Broadway'
+    ]
   }
 ] as const;
 
@@ -86,10 +110,10 @@ export default function Guides() {
                   <div className="p-6">
                     <h3 className="text-2xl font-bold mb-4">{city.name}</h3>
                     <ul className="space-y-2">
-                      {city.guides.map((guide) => (
-                        <li key={guide} className="flex items-center">
-                          <span className="w-2 h-2 bg-gray-300 rounded-full mr-3"></span>
-                          {guide}
+                      {city.sections.map((section) => (
+                        <li key={section} className="flex items-center">
+                          <span className="w-2 h-2 bg-clay-500 rounded-full mr-3"></span>
+                          {section}
                         </li>
                       ))}
                     </ul>

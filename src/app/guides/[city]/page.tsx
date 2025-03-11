@@ -7,86 +7,164 @@ const cityGuides = {
   rome: {
     name: 'Rome',
     image: '/images/roma.jpg',
-    intro: 'Discover the eternal city through the eyes of locals, from hidden cafes to ancient secrets.',
-    guides: [
-      {
-        title: 'Hidden Cafes of Trastevere',
-        content: 'Explore the charming streets of Trastevere, where local cafes serve authentic Italian coffee and pastries. Visit Bar San Calisto for a traditional espresso, then head to Enzo and Dario for homemade cornetti. End your tour at Roscioli Caffè for their famous tiramisu.',
-        duration: '3-4 hours',
-        bestTime: 'Early morning or late afternoon',
-        tips: ['Avoid tourist-heavy hours (11am-2pm)', 'Many cafes are cash-only', 'Learn basic Italian greetings']
+    intro: 'Discover the eternal city through the eyes of locals, from authentic cuisine to vibrant nightlife.',
+    sections: {
+      foodAndDrink: {
+        title: 'Food & Drink',
+        description: 'From traditional pasta to artisanal gelato, Rome\'s culinary scene is a journey through history and flavor.',
+        highlights: [
+          {
+            name: 'Traditional Pasta Dishes',
+            items: ['Carbonara at Da Enzo al 29', 'Cacio e Pepe at Roscioli', 'Amatriciana at Armando al Pantheon'],
+            tips: 'Best enjoyed for dinner, reservations recommended'
+          },
+          {
+            name: 'Pizza & Street Food',
+            items: ['Roman-style pizza at Antico Forno Roscioli', 'Supplì at Supplizio', 'Porchetta sandwiches at Salumeria Roscioli'],
+            tips: 'Perfect for lunch or afternoon snack'
+          },
+          {
+            name: 'Wine & Aperitivo',
+            items: ['Local Frascati wines', 'Aperitivo at Hotel Locarno', 'Wine tasting at Rimessa Roscioli'],
+            tips: 'Aperitivo time is typically 6-8pm'
+          },
+          {
+            name: 'Desserts & Coffee',
+            items: ['Gelato at Fatamorgana', 'Tiramisu at Pompi', 'Espresso at Sant\'Eustachio'],
+            tips: 'Coffee is typically enjoyed standing at the bar'
+          }
+        ]
       },
-      {
-        title: 'Food & Wine Experience',
-        content: 'Savor authentic Roman cuisine at its finest. Start with traditional pasta dishes like Carbonara at Da Enzo al 29, try the famous Roman-style pizza at Antico Forno Roscioli, and indulge in gelato at Fatamorgana. Pair your meals with local wines from the Frascati region.',
-        duration: '4-5 hours',
-        bestTime: 'Dinner time (7:30pm-10:30pm)',
-        tips: ['Make reservations for popular restaurants', 'Try the house wine (vino della casa)', 'Ask for local specialties not on the menu']
-      },
-      {
-        title: 'Music & Nightlife',
-        content: 'Experience Rome\'s vibrant nightlife scene. Begin at Big Mama for live blues and jazz, then head to Alexanderplatz Jazz Club for world-class performances. End the night at Club Circolo degli Artisti for contemporary music and dancing.',
-        duration: '5-6 hours',
-        bestTime: 'Late evening until early morning',
-        tips: ['Check event schedules in advance', 'Book tickets online for popular venues', 'Take a taxi for late-night returns']
+      entertainment: {
+        title: 'Entertainment & Music',
+        description: 'Experience Rome\'s dynamic nightlife scene, from classical concerts to modern clubs.',
+        highlights: [
+          {
+            name: 'Live Music Venues',
+            items: ['Jazz at Big Mama', 'Classical at Teatro dell\'Opera', 'Contemporary at Monk Club'],
+            tips: 'Book tickets in advance, especially for weekend shows'
+          },
+          {
+            name: 'Nightlife Districts',
+            items: ['Trastevere bars', 'Testaccio clubs', 'Pigneto alternative scene'],
+            tips: 'Most venues get busy after 11pm'
+          },
+          {
+            name: 'Cultural Shows',
+            items: ['Summer concerts at Caracalla', 'Teatro Argentina performances', 'Villa Ada Roma Incontra il Mondo festival'],
+            tips: 'Check seasonal schedules for outdoor events'
+          }
+        ]
       }
-    ]
+    }
   },
   tokyo: {
     name: 'Tokyo',
     image: '/images/tokyo.jpg',
-    intro: 'Navigate Tokyo\'s dynamic culture through local perspectives, from street food adventures to peaceful temple walks.',
-    guides: [
-      {
-        title: 'Izakaya & Sake Tour',
-        content: 'Dive into Tokyo\'s izakaya culture in Shinjuku\'s Golden Gai. Sample different types of sake while enjoying traditional bar snacks. Visit Albatross for its unique atmosphere, then try Deathmatch in Paradise for their legendary chicken wings. End at Bar Plastic Model for creative cocktails.',
-        duration: '4-5 hours',
-        bestTime: 'Evening (6pm onwards)',
-        tips: ['Make reservations for small izakayas', 'Try different grades of sake', 'Learn basic drinking etiquette']
+    intro: 'Navigate Tokyo\'s dynamic culture through local perspectives, from street food adventures to cutting-edge entertainment.',
+    sections: {
+      foodAndDrink: {
+        title: 'Food & Drink',
+        description: 'Discover Tokyo\'s incredible culinary diversity, from humble street food to refined dining experiences.',
+        highlights: [
+          {
+            name: 'Ramen & Noodles',
+            items: ['Tsukemen at Fuunji', 'Tantanmen at Nakiryu', 'Udon at Mentsudan'],
+            tips: 'Many shops have ticket machines for ordering'
+          },
+          {
+            name: 'Sushi & Seafood',
+            items: ['Tsukiji Outer Market stalls', 'Standing sushi at Uogashi Nihon-Ichi', 'Conveyor belt sushi at Hanamaru'],
+            tips: 'Best quality for lunch sets'
+          },
+          {
+            name: 'Izakaya Favorites',
+            items: ['Yakitori at Torikizoku', 'Kushiage at Kushinobo', 'Sake tasting at Sasagin'],
+            tips: 'Most izakayas open from 5pm onwards'
+          },
+          {
+            name: 'Street Food',
+            items: ['Takoyaki in Ameyoko', 'Monjayaki in Tsukishima', 'Taiyaki at Naniwaya'],
+            tips: 'Markets are best visited during lunch hours'
+          }
+        ]
       },
-      {
-        title: 'Ramen & Street Food Safari',
-        content: 'Explore Tokyo\'s diverse ramen scene. Start at Fuunji for their famous tsukemen, try Nakiryu\'s tantanmen, and experience Ramen Street in Tokyo Station. Don\'t miss the street food in Ameya-Yokocho market, including takoyaki and yakitori.',
-        duration: '3-4 hours',
-        bestTime: 'Lunch or late dinner',
-        tips: ['Be prepared to wait at popular spots', 'Look for shops with ticket machines', 'Try different ramen styles']
-      },
-      {
-        title: 'Live Music & Entertainment',
-        content: 'Experience Tokyo\'s eclectic music scene. Start at Blue Note Tokyo for world-class jazz, visit O-NEST in Shibuya for indie bands, and end at Contact for electronic music. Don\'t miss the unique experience of a karaoke room at Big Echo.',
-        duration: '6-7 hours',
-        bestTime: 'Evening until last train',
-        tips: ['Book tickets in advance', 'Check last train times', 'Join the local music meetups']
+      entertainment: {
+        title: 'Entertainment & Music',
+        description: 'From traditional performances to futuristic entertainment, Tokyo never stops amazing.',
+        highlights: [
+          {
+            name: 'Live Music',
+            items: ['Jazz at Blue Note Tokyo', 'Rock at O-NEST', 'Electronic at Contact'],
+            tips: 'Last trains usually leave around midnight'
+          },
+          {
+            name: 'Traditional Arts',
+            items: ['Kabuki at Kabukiza Theatre', 'Sumo at Ryogoku', 'Taiko drums at Asakusa'],
+            tips: 'English headsets available at most venues'
+          },
+          {
+            name: 'Modern Entertainment',
+            items: ['Karaoke at Big Echo', 'Gaming at Joypolis', 'Robot Restaurant show'],
+            tips: 'Book karaoke rooms in advance on weekends'
+          }
+        ]
       }
-    ]
+    }
   },
   barcelona: {
     name: 'Barcelona',
     image: '/images/barcelona.jpg',
-    intro: 'Experience Barcelona\'s vibrant culture through local traditions, from tapas trails to hidden beaches.',
-    guides: [
-      {
-        title: 'Tapas & Wine Journey',
-        content: 'Discover Barcelona\'s best tapas bars. Start at El Xampanyet for their house-made vermouth and anchovies, continue to Cal Pep for seafood specialties, and end at Quimet & Quimet for their montaditos. Pair everything with local Catalan wines.',
-        duration: '4-5 hours',
-        bestTime: 'Evening (8pm onwards)',
-        tips: ['Order vermut to start', 'Try local Priorat wines', 'Share plates for more variety']
+    intro: 'Experience Barcelona\'s vibrant culture through local traditions, from tapas to flamenco.',
+    sections: {
+      foodAndDrink: {
+        title: 'Food & Drink',
+        description: 'Savor the flavors of Catalonia, from traditional tapas to innovative cuisine.',
+        highlights: [
+          {
+            name: 'Tapas & Pintxos',
+            items: ['El Xampanyet for anchovies', 'Cal Pep for seafood', 'Quimet & Quimet for montaditos'],
+            tips: 'Dinner typically starts after 8:30pm'
+          },
+          {
+            name: 'Local Markets',
+            items: ['La Boqueria fresh produce', 'Santa Caterina specialties', 'Sant Antoni local scene'],
+            tips: 'Markets are best visited in the morning'
+          },
+          {
+            name: 'Catalan Wines',
+            items: ['Priorat reds', 'Penedès cavas', 'Natural wines at Bar Brutal'],
+            tips: 'Start with vermut as an aperitif'
+          },
+          {
+            name: 'Sweet Treats',
+            items: ['Churros at Granja La Pallaresa', 'Crema catalana at Granja M. Viader', 'Pastries at Hofmann'],
+            tips: 'Many cafes close for siesta'
+          }
+        ]
       },
-      {
-        title: 'Market & Food Workshop',
-        content: 'Immerse yourself in Catalan cuisine. Visit La Boqueria market to source ingredients, learn to make paella at a local cooking school, and discover traditional desserts like crema catalana. End with a visit to a xocolateria for churros.',
-        duration: '5-6 hours',
-        bestTime: 'Morning market visits',
-        tips: ['Arrive early at markets', 'Book cooking classes ahead', 'Try seasonal specialties']
-      },
-      {
-        title: 'Flamenco & Live Music',
-        content: 'Experience Barcelona\'s rich music scene. Watch authentic flamenco at Tablao Cordobes, enjoy jazz at Jamboree, and end the night at Razzmatazz for diverse music across five rooms. Don\'t miss the street performers on Las Ramblas.',
-        duration: 'Full evening',
-        bestTime: 'Late evening until early morning',
-        tips: ['Book flamenco shows in advance', 'Check club schedules online', 'Try different music venues']
+      entertainment: {
+        title: 'Entertainment & Music',
+        description: 'From passionate flamenco to modern nightclubs, Barcelona\'s nights are alive with energy.',
+        highlights: [
+          {
+            name: 'Flamenco Shows',
+            items: ['Tablao Cordobes', 'Los Tarantos', 'Palacio del Flamenco'],
+            tips: 'Book front row seats for the best experience'
+          },
+          {
+            name: 'Live Music',
+            items: ['Jazz at Jamboree', 'Alternative at Razzmatazz', 'Classical at Palau de la Música'],
+            tips: 'Many venues have multiple rooms with different styles'
+          },
+          {
+            name: 'Street Performance',
+            items: ['Las Ramblas artists', 'Gothic Quarter musicians', 'Born district performers'],
+            tips: 'Best atmosphere on weekend evenings'
+          }
+        ]
       }
-    ]
+    }
   }
 } as const;
 
@@ -133,41 +211,54 @@ export default function CityGuide({ params }: { params: { city: string } }) {
           </div>
         </div>
 
-        {/* Guides Section */}
-        <section className="py-16">
+        {/* Sections */}
+        <div className="py-16">
           <div className="container mx-auto px-4">
-            <div className="space-y-12">
-              {cityData.guides.map((guide) => (
-                <div key={guide.title} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="p-8">
-                    <h2 className="text-3xl font-bold mb-4">{guide.title}</h2>
-                    <p className="text-gray-600 mb-6">{guide.content}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
-                        <p className="text-gray-600">{guide.duration}</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Best Time</h3>
-                        <p className="text-gray-600">{guide.bestTime}</p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <h3 className="font-semibold text-gray-900 mb-2">Local Tips</h3>
-                      <ul className="list-disc list-inside text-gray-600 space-y-1">
-                        {guide.tips.map((tip, index) => (
-                          <li key={index}>{tip}</li>
-                        ))}
-                      </ul>
-                    </div>
+            {/* Food & Drink Section */}
+            <section className="mb-16">
+              <h2 className="text-4xl font-bold mb-6">{cityData.sections.foodAndDrink.title}</h2>
+              <p className="text-xl text-gray-600 mb-8">{cityData.sections.foodAndDrink.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {cityData.sections.foodAndDrink.highlights.map((highlight) => (
+                  <div key={highlight.name} className="bg-white rounded-lg shadow-lg p-6">
+                    <h3 className="text-2xl font-semibold mb-4">{highlight.name}</h3>
+                    <ul className="space-y-2 mb-4">
+                      {highlight.items.map((item, index) => (
+                        <li key={index} className="flex items-center">
+                          <span className="w-2 h-2 bg-clay-500 rounded-full mr-3"></span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-gray-600 italic">{highlight.tips}</p>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Entertainment Section */}
+            <section>
+              <h2 className="text-4xl font-bold mb-6">{cityData.sections.entertainment.title}</h2>
+              <p className="text-xl text-gray-600 mb-8">{cityData.sections.entertainment.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {cityData.sections.entertainment.highlights.map((highlight) => (
+                  <div key={highlight.name} className="bg-white rounded-lg shadow-lg p-6">
+                    <h3 className="text-2xl font-semibold mb-4">{highlight.name}</h3>
+                    <ul className="space-y-2 mb-4">
+                      {highlight.items.map((item, index) => (
+                        <li key={index} className="flex items-center">
+                          <span className="w-2 h-2 bg-clay-500 rounded-full mr-3"></span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-gray-600 italic">{highlight.tips}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
       </main>
       <Footer />
     </div>
