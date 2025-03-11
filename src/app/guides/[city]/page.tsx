@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from '../../../components/Navigation';
 import Footer from '../../../components/Footer';
+import Image from 'next/image';
 
 const cityGuides = {
   rome: {
@@ -116,10 +117,14 @@ export default function CityGuide({ params }: { params: { city: string } }) {
       <Navigation />
       <main className="flex-grow">
         {/* Hero Section */}
-        <div 
-          className="relative h-[50vh] bg-cover bg-center"
-          style={{ backgroundImage: `url(${cityData.image})` }}
-        >
+        <div className="relative h-[50vh]">
+          <Image 
+            src={cityData.image}
+            alt={`${cityData.name} city view`}
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <div className="text-center text-white">
               <h1 className="text-5xl font-bold mb-4">{cityData.name}</h1>

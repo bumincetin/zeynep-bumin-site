@@ -42,7 +42,7 @@ export default function Guides() {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-12 text-center">Featured Cities</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cities.map((city) => (
+              {cities.map((city, index) => (
                 <Link 
                   href={`/guides/${city.name.toLowerCase()}`} 
                   key={city.name}
@@ -53,7 +53,9 @@ export default function Guides() {
                       src={city.image} 
                       alt={city.name}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover"
+                      priority={index < 3}
                     />
                     <div className="absolute inset-0 bg-black/20 hover:bg-black/40 transition-colors duration-200" />
                   </div>
