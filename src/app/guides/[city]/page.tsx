@@ -2,6 +2,8 @@ import React from 'react';
 import Navigation from '../../../components/Navigation';
 import Footer from '../../../components/Footer';
 import Image from 'next/image';
+import Link from 'next/link';
+import ExploreMap from '../../../components/ExploreMap';
 
 const cityGuides = {
   rome: {
@@ -207,6 +209,31 @@ export default function CityGuide({ params }: { params: { city: string } }) {
             <div className="text-center text-white">
               <h1 className="text-5xl font-bold mb-4">{cityData.name}</h1>
               <p className="text-xl max-w-2xl mx-auto px-4">{cityData.intro}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Map Preview Section */}
+        <div className="bg-clay-50 py-12">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-4">Explore {cityData.name} on the Map</h2>
+              <p className="text-xl text-gray-600">
+                Find all our recommended spots and plan your visit easily.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="h-[400px]">
+                <ExploreMap selectedCity={citySlug} />
+              </div>
+              <div className="p-6 text-center">
+                <Link 
+                  href="/explore" 
+                  className="inline-block bg-clay-600 text-white px-8 py-3 rounded-lg hover:bg-clay-700 transition-colors"
+                >
+                  View Full Map →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
