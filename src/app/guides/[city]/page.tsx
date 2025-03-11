@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { useParams } from 'next/navigation';
 import Navigation from '../../../components/Navigation';
 import Footer from '../../../components/Footer';
 
@@ -90,11 +87,16 @@ const cityGuides = {
       }
     ]
   }
-};
+} as const;
 
-export default function CityGuide() {
-  const params = useParams();
-  const citySlug = typeof params.city === 'string' ? params.city.toLowerCase() : '';
+export function generateStaticParams() {
+  return Object.keys(cityGuides).map((city) => ({
+    city: city,
+  }));
+}
+
+export default function CityGuide({ params }: { params: { city: string } }) {
+  const citySlug = params.city.toLowerCase();
   const cityData = cityGuides[citySlug as keyof typeof cityGuides];
 
   if (!cityData) {

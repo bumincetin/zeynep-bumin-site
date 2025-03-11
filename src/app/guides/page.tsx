@@ -1,9 +1,8 @@
-'use client';
-
 import React from 'react';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const cities = [
   { name: 'Rome', image: '/images/roma.jpg', guides: ['Hidden Cafes', 'Ancient Secrets', 'Local Markets'] },
@@ -12,14 +11,14 @@ const cities = [
   { name: 'Paris', image: '/images/paris.jpg', guides: ['Hidden Bistros', 'Art Walk', 'Local Life'] },
   { name: 'Istanbul', image: '/images/istanbul.jpg', guides: ['Spice Markets', 'Bosphorus Tour', 'Tea Gardens'] },
   { name: 'New York', image: '/images/newyork.jpg', guides: ['Hidden Delis', 'Local Parks', 'Food Scene'] }
-];
+] as const;
 
 const genericGuides = [
   { title: 'Finding Local Events', description: 'Tips for discovering authentic local festivals and events.' },
   { title: 'Transportation Guide', description: 'Navigate like a local using public transport and walking routes.' },
   { title: 'Food Explorer Guide', description: 'How to find and enjoy authentic local cuisine safely.' },
   { title: 'Cultural Etiquette', description: 'Essential customs and manners for respectful travel.' }
-];
+] as const;
 
 export default function Guides() {
   return (
@@ -49,11 +48,12 @@ export default function Guides() {
                   key={city.name}
                   className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200"
                 >
-                  <div className="relative">
-                    <img 
+                  <div className="relative h-48">
+                    <Image 
                       src={city.image} 
                       alt={city.name}
-                      className="w-full h-48 object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-black/20 hover:bg-black/40 transition-colors duration-200" />
                   </div>
@@ -78,7 +78,7 @@ export default function Guides() {
         </section>
 
         {/* Generic Guides */}
-        <section className="py-16 bg-white">
+        <section className="py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-12 text-center">Essential Travel Guides</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
