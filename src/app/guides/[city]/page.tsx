@@ -6,7 +6,7 @@ import Image from 'next/image';
 const cityGuides = {
   rome: {
     name: 'Rome',
-    image: '/images/roma.jpg',
+    image: '/zeynep-bumin-site/images/roma.jpg',
     intro: 'Discover the eternal city through the eyes of locals, from authentic cuisine to vibrant nightlife.',
     sections: {
       foodAndDrink: {
@@ -60,7 +60,7 @@ const cityGuides = {
   },
   tokyo: {
     name: 'Tokyo',
-    image: '/images/tokyo.jpg',
+    image: '/zeynep-bumin-site/images/tokyo.jpg',
     intro: 'Navigate Tokyo\'s dynamic culture through local perspectives, from street food adventures to cutting-edge entertainment.',
     sections: {
       foodAndDrink: {
@@ -114,7 +114,7 @@ const cityGuides = {
   },
   barcelona: {
     name: 'Barcelona',
-    image: '/images/barcelona.jpg',
+    image: '/zeynep-bumin-site/images/barcelona.jpg',
     intro: 'Experience Barcelona\'s vibrant culture through local traditions, from tapas to flamenco.',
     sections: {
       foodAndDrink: {

@@ -7,7 +7,7 @@ import Image from 'next/image';
 const cities = [
   { 
     name: 'Rome', 
-    image: '/images/roma.jpg', 
+    image: '/zeynep-bumin-site/images/roma.jpg', 
     sections: [
       'Traditional Pasta & Pizza',
       'Wine & Aperitivo',
@@ -16,7 +16,7 @@ const cities = [
   },
   { 
     name: 'Tokyo', 
-    image: '/images/tokyo.jpg', 
+    image: '/zeynep-bumin-site/images/tokyo.jpg', 
     sections: [
       'Ramen & Street Food',
       'Izakaya & Sake',
@@ -25,7 +25,7 @@ const cities = [
   },
   { 
     name: 'Barcelona', 
-    image: '/images/barcelona.jpg', 
+    image: '/zeynep-bumin-site/images/barcelona.jpg', 
     sections: [
       'Tapas & Catalan Wine',
       'Market & Local Cuisine',
@@ -34,7 +34,7 @@ const cities = [
   },
   { 
     name: 'Paris', 
-    image: '/images/paris.jpg', 
+    image: '/zeynep-bumin-site/images/paris.jpg', 
     sections: [
       'Bistros & Fine Dining',
       'Wine & Cheese',
@@ -43,7 +43,7 @@ const cities = [
   },
   { 
     name: 'Istanbul', 
-    image: '/images/istanbul.jpg', 
+    image: '/zeynep-bumin-site/images/istanbul.jpg', 
     sections: [
       'Meyhane & Raki',
       'Street Food & Spices',
@@ -52,7 +52,7 @@ const cities = [
   },
   { 
     name: 'New York', 
-    image: '/images/newyork.jpg', 
+    image: '/zeynep-bumin-site/images/newyork.jpg', 
     sections: [
       'Food Trucks & Delis',
       'Craft Beer & Cocktails',
