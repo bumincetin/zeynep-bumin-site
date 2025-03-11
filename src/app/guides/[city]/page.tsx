@@ -1,293 +1,142 @@
 import React from 'react';
-import Navigation from '../../../components/Navigation';
-import Footer from '../../../components/Footer';
-import Image from 'next/image';
-import Link from 'next/link';
-import ExploreMap from '../../../components/ExploreMap';
+import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
+
+const CityGuideContent = dynamic(() => import('../../../components/CityGuideContent'), {
+  loading: () => (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="text-xl text-gray-600">Loading guide...</div>
+    </div>
+  ),
+});
 
 const cityGuides = {
   rome: {
-    name: 'Rome',
+    title: 'Hidden Gems of Rome',
     image: '/zeynep-bumin-site/images/roma.jpg',
-    intro: 'Discover the eternal city through the eyes of locals, from authentic cuisine to vibrant nightlife.',
     sections: {
-      foodAndDrink: {
-        title: 'Food & Drink',
-        description: 'From traditional pasta to artisanal gelato, Rome\'s culinary scene is a journey through history and flavor.',
-        highlights: [
+      food: {
+        title: 'Food & Wine',
+        items: [
           {
-            name: 'Traditional Pasta Dishes',
-            items: ['Carbonara at Da Enzo al 29', 'Cacio e Pepe at Roscioli', 'Amatriciana at Armando al Pantheon'],
-            tips: 'Best enjoyed for dinner, reservations recommended'
+            title: 'Traditional Pasta & Pizza',
+            description: 'Discover authentic Roman pasta dishes and pizza at local trattorias.',
+            duration: '2-3 hours',
+            bestTime: 'Lunch or dinner time',
+            tips: 'Try Cacio e Pepe and Roman-style pizza'
           },
           {
-            name: 'Pizza & Street Food',
-            items: ['Roman-style pizza at Antico Forno Roscioli', 'Supplì at Supplizio', 'Porchetta sandwiches at Salumeria Roscioli'],
-            tips: 'Perfect for lunch or afternoon snack'
-          },
-          {
-            name: 'Wine & Aperitivo',
-            items: ['Local Frascati wines', 'Aperitivo at Hotel Locarno', 'Wine tasting at Rimessa Roscioli'],
-            tips: 'Aperitivo time is typically 6-8pm'
-          },
-          {
-            name: 'Desserts & Coffee',
-            items: ['Gelato at Fatamorgana', 'Tiramisu at Pompi', 'Espresso at Sant\'Eustachio'],
-            tips: 'Coffee is typically enjoyed standing at the bar'
+            title: 'Wine & Aperitivo',
+            description: 'Experience the Roman aperitivo culture with local wines.',
+            duration: '2 hours',
+            bestTime: '6-8 PM',
+            tips: 'Visit enotecas in Trastevere'
           }
         ]
       },
       entertainment: {
-        title: 'Entertainment & Music',
-        description: 'Experience Rome\'s dynamic nightlife scene, from classical concerts to modern clubs.',
-        highlights: [
+        title: 'Music & Culture',
+        items: [
           {
-            name: 'Live Music Venues',
-            items: ['Jazz at Big Mama', 'Classical at Teatro dell\'Opera', 'Contemporary at Monk Club'],
-            tips: 'Book tickets in advance, especially for weekend shows'
-          },
-          {
-            name: 'Nightlife Districts',
-            items: ['Trastevere bars', 'Testaccio clubs', 'Pigneto alternative scene'],
-            tips: 'Most venues get busy after 11pm'
-          },
-          {
-            name: 'Cultural Shows',
-            items: ['Summer concerts at Caracalla', 'Teatro Argentina performances', 'Villa Ada Roma Incontra il Mondo festival'],
-            tips: 'Check seasonal schedules for outdoor events'
+            title: 'Live Music & Shows',
+            description: 'Enjoy live music at historic venues and cultural performances.',
+            duration: '2-3 hours',
+            bestTime: 'Evening',
+            tips: 'Check local listings for performances'
           }
         ]
       }
     }
   },
   tokyo: {
-    name: 'Tokyo',
+    title: 'Hidden Gems of Tokyo',
     image: '/zeynep-bumin-site/images/tokyo.jpg',
-    intro: 'Navigate Tokyo\'s dynamic culture through local perspectives, from street food adventures to cutting-edge entertainment.',
     sections: {
-      foodAndDrink: {
+      food: {
         title: 'Food & Drink',
-        description: 'Discover Tokyo\'s incredible culinary diversity, from humble street food to refined dining experiences.',
-        highlights: [
+        items: [
           {
-            name: 'Ramen & Noodles',
-            items: ['Tsukemen at Fuunji', 'Tantanmen at Nakiryu', 'Udon at Mentsudan'],
-            tips: 'Many shops have ticket machines for ordering'
+            title: 'Izakaya & Sake Tour',
+            description: 'Experience local izakaya culture and sake tasting.',
+            duration: '3-4 hours',
+            bestTime: 'Evening',
+            tips: 'Try different types of sake'
           },
           {
-            name: 'Sushi & Seafood',
-            items: ['Tsukiji Outer Market stalls', 'Standing sushi at Uogashi Nihon-Ichi', 'Conveyor belt sushi at Hanamaru'],
-            tips: 'Best quality for lunch sets'
-          },
-          {
-            name: 'Izakaya Favorites',
-            items: ['Yakitori at Torikizoku', 'Kushiage at Kushinobo', 'Sake tasting at Sasagin'],
-            tips: 'Most izakayas open from 5pm onwards'
-          },
-          {
-            name: 'Street Food',
-            items: ['Takoyaki in Ameyoko', 'Monjayaki in Tsukishima', 'Taiyaki at Naniwaya'],
-            tips: 'Markets are best visited during lunch hours'
+            title: 'Ramen & Street Food',
+            description: 'Explore various ramen styles and street food options.',
+            duration: '2-3 hours',
+            bestTime: 'Lunch or late night',
+            tips: 'Visit ramen alleys in Shinjuku'
           }
         ]
       },
       entertainment: {
-        title: 'Entertainment & Music',
-        description: 'From traditional performances to futuristic entertainment, Tokyo never stops amazing.',
-        highlights: [
+        title: 'Entertainment',
+        items: [
           {
-            name: 'Live Music',
-            items: ['Jazz at Blue Note Tokyo', 'Rock at O-NEST', 'Electronic at Contact'],
-            tips: 'Last trains usually leave around midnight'
-          },
-          {
-            name: 'Traditional Arts',
-            items: ['Kabuki at Kabukiza Theatre', 'Sumo at Ryogoku', 'Taiko drums at Asakusa'],
-            tips: 'English headsets available at most venues'
-          },
-          {
-            name: 'Modern Entertainment',
-            items: ['Karaoke at Big Echo', 'Gaming at Joypolis', 'Robot Restaurant show'],
-            tips: 'Book karaoke rooms in advance on weekends'
+            title: 'Live Music & Shows',
+            description: 'From traditional music to modern performances.',
+            duration: '2-3 hours',
+            bestTime: 'Evening',
+            tips: 'Book tickets in advance'
           }
         ]
       }
     }
   },
   barcelona: {
-    name: 'Barcelona',
+    title: 'Hidden Gems of Barcelona',
     image: '/zeynep-bumin-site/images/barcelona.jpg',
-    intro: 'Experience Barcelona\'s vibrant culture through local traditions, from tapas to flamenco.',
     sections: {
-      foodAndDrink: {
-        title: 'Food & Drink',
-        description: 'Savor the flavors of Catalonia, from traditional tapas to innovative cuisine.',
-        highlights: [
+      food: {
+        title: 'Food & Wine',
+        items: [
           {
-            name: 'Tapas & Pintxos',
-            items: ['El Xampanyet for anchovies', 'Cal Pep for seafood', 'Quimet & Quimet for montaditos'],
-            tips: 'Dinner typically starts after 8:30pm'
+            title: 'Tapas & Wine Journey',
+            description: 'Discover local tapas bars and Catalan wines.',
+            duration: '3-4 hours',
+            bestTime: 'Evening',
+            tips: 'Try vermut and pintxos'
           },
           {
-            name: 'Local Markets',
-            items: ['La Boqueria fresh produce', 'Santa Caterina specialties', 'Sant Antoni local scene'],
-            tips: 'Markets are best visited in the morning'
-          },
-          {
-            name: 'Catalan Wines',
-            items: ['Priorat reds', 'Penedès cavas', 'Natural wines at Bar Brutal'],
-            tips: 'Start with vermut as an aperitif'
-          },
-          {
-            name: 'Sweet Treats',
-            items: ['Churros at Granja La Pallaresa', 'Crema catalana at Granja M. Viader', 'Pastries at Hofmann'],
-            tips: 'Many cafes close for siesta'
+            title: 'Market & Food Workshop',
+            description: 'Visit local markets and learn to cook Catalan dishes.',
+            duration: '4 hours',
+            bestTime: 'Morning',
+            tips: 'Visit La Boqueria market'
           }
         ]
       },
       entertainment: {
-        title: 'Entertainment & Music',
-        description: 'From passionate flamenco to modern nightclubs, Barcelona\'s nights are alive with energy.',
-        highlights: [
+        title: 'Music & Dance',
+        items: [
           {
-            name: 'Flamenco Shows',
-            items: ['Tablao Cordobes', 'Los Tarantos', 'Palacio del Flamenco'],
-            tips: 'Book front row seats for the best experience'
-          },
-          {
-            name: 'Live Music',
-            items: ['Jazz at Jamboree', 'Alternative at Razzmatazz', 'Classical at Palau de la Música'],
-            tips: 'Many venues have multiple rooms with different styles'
-          },
-          {
-            name: 'Street Performance',
-            items: ['Las Ramblas artists', 'Gothic Quarter musicians', 'Born district performers'],
-            tips: 'Best atmosphere on weekend evenings'
+            title: 'Flamenco & Live Music',
+            description: 'Experience authentic flamenco shows and live music.',
+            duration: '2-3 hours',
+            bestTime: 'Evening',
+            tips: 'Book authentic venues in advance'
           }
         ]
       }
     }
   }
-} as const;
+};
 
 export function generateStaticParams() {
   return Object.keys(cityGuides).map((city) => ({
-    city: city,
+    city: city.toLowerCase(),
   }));
 }
 
-export default function CityGuide({ params }: { params: { city: string } }) {
-  const citySlug = params.city.toLowerCase();
-  const cityData = cityGuides[citySlug as keyof typeof cityGuides];
+export default function CityGuidePage({ params }: { params: { city: string } }) {
+  const city = params.city.toLowerCase();
+  const guide = cityGuides[city as keyof typeof cityGuides];
 
-  if (!cityData) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <main className="flex-grow flex items-center justify-center">
-          <h1 className="text-2xl text-gray-600">City guide not found</h1>
-        </main>
-        <Footer />
-      </div>
-    );
+  if (!guide) {
+    notFound();
   }
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <div className="relative h-[50vh]">
-          <Image 
-            src={cityData.image}
-            alt={`${cityData.name} city view`}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <div className="text-center text-white">
-              <h1 className="text-5xl font-bold mb-4">{cityData.name}</h1>
-              <p className="text-xl max-w-2xl mx-auto px-4">{cityData.intro}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Map Preview Section */}
-        <div className="bg-clay-50 py-12">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Explore {cityData.name} on the Map</h2>
-              <p className="text-xl text-gray-600">
-                Find all our recommended spots and plan your visit easily.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="h-[400px]">
-                <ExploreMap selectedCity={citySlug} />
-              </div>
-              <div className="p-6 text-center">
-                <Link 
-                  href="/explore" 
-                  className="inline-block bg-clay-600 text-white px-8 py-3 rounded-lg hover:bg-clay-700 transition-colors"
-                >
-                  View Full Map →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Sections */}
-        <div className="py-16">
-          <div className="container mx-auto px-4">
-            {/* Food & Drink Section */}
-            <section className="mb-16">
-              <h2 className="text-4xl font-bold mb-6">{cityData.sections.foodAndDrink.title}</h2>
-              <p className="text-xl text-gray-600 mb-8">{cityData.sections.foodAndDrink.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {cityData.sections.foodAndDrink.highlights.map((highlight) => (
-                  <div key={highlight.name} className="bg-white rounded-lg shadow-lg p-6">
-                    <h3 className="text-2xl font-semibold mb-4">{highlight.name}</h3>
-                    <ul className="space-y-2 mb-4">
-                      {highlight.items.map((item, index) => (
-                        <li key={index} className="flex items-center">
-                          <span className="w-2 h-2 bg-clay-500 rounded-full mr-3"></span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="text-gray-600 italic">{highlight.tips}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Entertainment Section */}
-            <section>
-              <h2 className="text-4xl font-bold mb-6">{cityData.sections.entertainment.title}</h2>
-              <p className="text-xl text-gray-600 mb-8">{cityData.sections.entertainment.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {cityData.sections.entertainment.highlights.map((highlight) => (
-                  <div key={highlight.name} className="bg-white rounded-lg shadow-lg p-6">
-                    <h3 className="text-2xl font-semibold mb-4">{highlight.name}</h3>
-                    <ul className="space-y-2 mb-4">
-                      {highlight.items.map((item, index) => (
-                        <li key={index} className="flex items-center">
-                          <span className="w-2 h-2 bg-clay-500 rounded-full mr-3"></span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="text-gray-600 italic">{highlight.tips}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+  return <CityGuideContent guide={guide} />;
 } 

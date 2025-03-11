@@ -1,9 +1,18 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
-import ExploreMap from '../../components/ExploreMap';
+
+const ExploreMap = dynamic(() => import('../../components/ExploreMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="text-xl text-gray-600">Loading map...</div>
+    </div>
+  ),
+});
 
 export default function ExplorePage() {
   return (
