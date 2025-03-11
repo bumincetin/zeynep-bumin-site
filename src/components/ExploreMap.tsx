@@ -4,18 +4,8 @@ import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Fix for default marker icons in Leaflet with Next.js
-const fixLeafletIcons = () => {
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: '/zeynep-bumin-site/images/marker-icon-2x.png',
-    iconUrl: '/zeynep-bumin-site/images/marker-icon.png',
-    shadowUrl: '/zeynep-bumin-site/images/marker-shadow.png',
-  });
-};
-
 // Create custom red pin icon
-const redPinIcon = L.divIcon({
+const createRedPinIcon = () => L.divIcon({
   className: 'custom-pin',
   html: `<div style="
     width: 24px;
@@ -277,70 +267,92 @@ export default function ExploreMap({ selectedCity }: ExploreMapProps) {
     setActiveFeatures(newFeatures);
   };
 
+  // Initialize map
   useEffect(() => {
-    // Fix Leaflet icons
-    fixLeafletIcons();
+    if (typeof window !== 'undefined') {
+      // Fix Leaflet icons
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/zeynep-bumin-site/images/marker-icon-2x.png',
+        iconUrl: '/zeynep-bumin-site/images/marker-icon.png',
+        shadowUrl: '/zeynep-bumin-site/images/marker-shadow.png',
+      });
 
-    // Initialize map if not already initialized
-    if (!map) {
-      const newMap = L.map('map');
-      setMap(newMap);
-
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(newMap);
+      if (!map) {
+        const newMap = L.map('map');
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(newMap);
+        setMap(newMap);
+      }
     }
+
+    return () => {
+      if (map) {
+        map.remove();
+      }
+    };
+  }, []);
+
+  // Handle markers
+  useEffect(() => {
+    if (!map) return;
 
     // Clear existing markers
     markers.forEach(marker => marker.remove());
     const newMarkers: L.Marker[] = [];
 
-    // Create markers for selected city or all cities
-    if (selectedCity && cityLocations[selectedCity]) {
-      const cityData = cityLocations[selectedCity];
-      map?.setView(cityData.center, cityData.zoom);
+    try {
+      // Create markers for selected city or all cities
+      if (selectedCity && cityLocations[selectedCity]) {
+        const cityData = cityLocations[selectedCity];
+        map.setView(cityData.center, cityData.zoom);
 
-      // Add markers for the selected city
-      cityData.locations.forEach(location => {
-        if (location.features.some(feature => activeFeatures.has(feature))) {
-          const marker = L.marker(location.coordinates, { icon: redPinIcon })
-            .addTo(map!)
-            .bindPopup(`
-              <strong>${location.name}</strong><br>
-              <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
-              ${location.description}
-            `);
-          newMarkers.push(marker);
-        }
-      });
-    } else {
-      // Show all cities if no specific city is selected
-      const bounds = new L.LatLngBounds([]);
-      Object.values(cityLocations).forEach(cityData => {
+        // Add markers for the selected city
         cityData.locations.forEach(location => {
           if (location.features.some(feature => activeFeatures.has(feature))) {
-            const marker = L.marker(location.coordinates, { icon: redPinIcon })
-              .addTo(map!)
+            const marker = L.marker(location.coordinates, { icon: createRedPinIcon() })
+              .addTo(map)
               .bindPopup(`
                 <strong>${location.name}</strong><br>
-                <em>${cityData.city}</em><br>
                 <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
                 ${location.description}
               `);
-            bounds.extend(location.coordinates);
             newMarkers.push(marker);
           }
         });
-      });
-      map?.fitBounds(bounds, { padding: [50, 50] });
+      } else {
+        // Show all cities if no specific city is selected
+        const bounds = new L.LatLngBounds([]);
+        Object.values(cityLocations).forEach(cityData => {
+          cityData.locations.forEach(location => {
+            if (location.features.some(feature => activeFeatures.has(feature))) {
+              const marker = L.marker(location.coordinates, { icon: createRedPinIcon() })
+                .addTo(map)
+                .bindPopup(`
+                  <strong>${location.name}</strong><br>
+                  <em>${cityData.city}</em><br>
+                  <em>${location.features.map(f => featureLabels[f]).join(', ')}</em><br>
+                  ${location.description}
+                `);
+              bounds.extend(location.coordinates);
+              newMarkers.push(marker);
+            }
+          });
+        });
+        if (bounds.getNorthEast() && bounds.getSouthWest()) {
+          map.fitBounds(bounds, { padding: [50, 50] });
+        }
+      }
+
+      setMarkers(newMarkers);
+    } catch (error) {
+      console.error('Error updating markers:', error);
     }
 
-    setMarkers(newMarkers);
-
     return () => {
-      markers.forEach(marker => marker.remove());
+      newMarkers.forEach(marker => marker.remove());
     };
   }, [selectedCity, activeFeatures, map]);
 
